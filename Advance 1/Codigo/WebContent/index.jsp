@@ -1,0 +1,1 @@
+<% response.sendRedirect("view/Biblioteca?accion=QRY"); %>
