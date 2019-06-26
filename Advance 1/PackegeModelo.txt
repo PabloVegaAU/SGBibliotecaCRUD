@@ -1,0 +1,204 @@
+package pe.autonoma.model;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+
+import pe.autonoma.entity.Biblioteca;
+import pe.autonoma.jdbc.ConectaDb;
+import pe.autonoma.service.ServiceBiblioteca;
+
+public class ServiceBibliotecalmpl implements ServiceBiblioteca{
+	private final ConectaDb db;
+	private String mensaje;
+	public ServiceBibliotecalmpl() {
+		this.db = new ConectaDb();
+	}
+	//Listo
+	@Override
+	public List<Biblioteca> bibliotecaQry() {
+		List<Biblioteca> lista = null;
+		String sql = "SELECT codlib, nomlib, cantlib, autor FROM librosua";
+		Connection cn = db.getConnection();
+		if (cn != null) {
+			try {
+				PreparedStatement ps = cn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+				
+				lista = new LinkedList<Biblioteca>();
+				while (rs.next()) {
+					Biblioteca biblioteca=new Biblioteca();
+					biblioteca.setCodlib(rs.getInt(1));
+					biblioteca.setNomlib(rs.getString(2));
+					biblioteca.setCantlib(rs.getInt(3));
+					biblioteca.setAutor(rs.getString(4));
+					
+					lista.add(biblioteca);
+				}
+				
+				ps.close();
+			}catch(SQLException e) {
+				setMensaje("Problemas para listar: " + e.getMessage());
+			}finally {
+				try {
+					cn.close();
+				} catch (SQLException ex) {
+					setMensaje(ex.getMessage());
+				}
+			}
+		} else {
+			setMensaje("Error en conexion: " + db.getMessage());
+		}
+		return lista;
+	}
+    //Listo
+	@Override
+	public void bibliotecaIns(Biblioteca biblioteca) {
+		String sql = "INSERT INTO librosua(nomlib, cantlib, autor) VALUES(?,?,?)";
+		Connection cn = db.getConnection();
+		if (cn != null) {
+			try {
+				PreparedStatement ps = cn.prepareStatement(sql);
+				
+				ps.setString(1, biblioteca.getNomlib());
+				ps.setInt(2, biblioteca.getCantlib());
+				ps.setString(3, biblioteca.getAutor());
+				
+				int exec = ps.executeUpdate();
+				
+				if (exec == 0) {
+					throw new SQLException();
+				}
+				ps.close();
+				
+			} catch (SQLException e) {
+				setMensaje("Problemas para insertar: " + e.getMessage());
+			} finally {
+				try {
+					cn .close();
+				} catch (SQLException ex) {
+					setMensaje(ex.getMessage());
+				}
+			}
+		} else {
+			setMensaje("Error en conexion: " + db.getMessage());
+		}
+		
+	}
+    //Listo
+	@Override
+	public Biblioteca bibliotecaFnd(Integer codlib) {
+		Biblioteca biblioteca = null;
+		String sql = "SELECT codlib, nomlib, cantlib, autor FROM librosua WHERE codlib=?";
+		Connection cn = db.getConnection();
+		if (cn != null) {
+			try {
+				PreparedStatement ps = cn.prepareStatement(sql);
+				
+				ps.setInt(1, codlib);
+				
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					biblioteca = new Biblioteca();
+					
+					biblioteca.setCodlib(rs.getInt(1));
+					biblioteca.setNomlib(rs.getString(2));
+					biblioteca.setCantlib(rs.getInt(3));
+					biblioteca.setAutor(rs.getString(4));
+				}
+				ps.close();
+				
+			} catch (SQLException e) {
+				setMensaje("Problemas para consultar: " + e.getMessage());
+			} finally {
+				try {
+					cn.close();
+				} catch (SQLException ex) {
+					setMensaje(ex.getMessage());
+				}
+			}
+		} else {
+			setMensaje("Error en conexion: " + db.getMessage());
+		}
+		return biblioteca;
+	}
+    //Listo
+	@Override
+	public void bibliotecaUpd(Biblioteca biblioteca) {
+		String sql = "UPDATE librosua SET nomlib=?, cantlib=?, autor=? WHERE codlib=?";
+		Connection cn = db.getConnection();
+		
+		if (cn != null) {
+			try {
+				PreparedStatement ps = cn.prepareStatement(sql);
+				
+				ps.setString(1, biblioteca.getNomlib());
+				ps.setInt(2, biblioteca.getCantlib());
+				ps.setString(3, biblioteca.getAutor());
+				ps.setInt(4, biblioteca.getCodlib());
+				
+				int exec = ps.executeUpdate();
+				
+				if (exec == 0) {
+					throw new SQLException();
+					
+				}
+				ps.close();
+				
+			} catch (SQLException e) {
+				setMensaje("Problemas para actualizar: " + e.getMessage());
+			} finally {
+				try {
+					cn .close();
+				} catch (SQLException ex) {
+					setMensaje(ex.getMessage());
+				}
+			}
+		} else {
+			setMensaje("Error en conexion: " + db.getMessage());
+		}
+	}
+    //Listo
+	@Override
+	public void bibliotecaDel(Integer codlib) {
+		String sql = "DELETE FROM librosua WHERE codlib=?";
+		Connection cn = db.getConnection();
+		
+		if (cn != null) {
+			try {
+				PreparedStatement ps = cn.prepareStatement(sql);
+
+				ps.setInt(1, codlib);
+				
+				int exec = ps.executeUpdate();
+				
+				if (exec == 0) {
+					throw new SQLException();
+				}
+				ps.close();
+				
+			} catch (SQLException e) {
+				setMensaje("Problemas para eliminar: " + e.getMessage());
+			} finally {
+				try {
+					cn .close();
+				} catch (SQLException ex) {
+					setMensaje(ex.getMessage());
+				}
+			}
+		} else {
+			setMensaje("Error en conexion: " + db.getMessage());
+		}
+	}
+    //Listo
+	@Override
+	public String getMensaje() {
+		return mensaje;
+	}
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+}
