@@ -15,7 +15,7 @@ public class ConectaDb {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             cn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/" + database,
-                    "root","25845674123456");
+                    "","");
 
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             setMessage(ex.getMessage());
