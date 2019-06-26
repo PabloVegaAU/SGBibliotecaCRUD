@@ -1,0 +1,30 @@
+biblioteca
+
+id --> codlib
+nombres --> nomlib
+edad --> cantlib
+hoobies--> autor
+
+
+
+
+Contactos -->Biblioteca
+contactos-->biblioteca
+
+codigolibro
+nombre de libro
+cantidad de libros
+autor
+
+create table librosua(codlib int AUTO_INCREMENT not null,
+                     nomlib varchar(100),
+                     cantlib int,
+                     autor varchar(50),
+                     PRIMARY KEY(codlib));
+
+contactosIns -->bibliotecaIns
+contactosFnd -->bibliotecaFnd
+contactosUpd -->bibliotecaUpd
+contactosDel -->bibliotecaDel
+
+	
