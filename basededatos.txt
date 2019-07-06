@@ -1,0 +1,20 @@
+CREANDO BASE DE DATOS
+create database biblioteca;
+TABLA LIBROS
+create table libros(libro_id int AUTO_INCREMENT not null,
+                   codigolib int,
+                   nombrelib varchar(100),
+                   cantidadlib int,
+                   autorlib varchar(100),
+                   PRIMARY KEY(libro_id));
+TABLA PRESTAMOS
+create table prestamos(prestamo_id int AUTO_INCREMENT not null,
+                      libro_id int,
+                      nombrelibro varchar(100),
+                      cantidadlibro int,
+                      fechaentrega varchar(100),
+                      fechadevolucion varchar(100),
+                      PRIMARY KEY(prestamo_id));
+
+PHMMYADMIN BY XAMPP
+NO OLVIDAR RELACIONAR LAS TABLAS
