@@ -1,0 +1,33 @@
+TIENE 4 CONTROLLERS
+ADMIN
+CLIENTE
+INICIO
+Y CREAR
+ 
+
+CREAR EL CONTROLLER/CREAR POR QUE SE BUGEABA CUANDO LO PONIA EN EL MISMO CONTROLLER/CLIENTE
+EXISTEN 3 HEADER
+1 PARA CLIENTE (TIENE UN VER PRESTAMOS, VER LIBROS, [ESTE SI PUEDE PRESTARSE], CERRAR SESION[ESTOY VIENDO COMO S EHACE ESO], Y  )
+1 PARA ADMIN (VER LISTA LIBROS [ESTE PUEDE MODIFICAR], LISTA DE PRESTAMOS)
+1 PARA INICIO (SE VE EL INICIO, LA LISTA DE LIBROS, CANTIDAD). ESTE NO PUEDE SOLICITAR LIBROS
+
+OTROS:
+
+index.jsp el INICIO de la pAGINA
+lista de libros, una vista de libros disponibles[cantidad]
+
+ADMIN: 
+AV  para que ingrese el admin
+admin es el inicio del admin
+Prestamos: Lista de prestamos
+
+CLIENTE:
+C  crear unevo usuario
+VC para que ingrece el cliente
+Pedir libro: el usuario podra pedir libros
+
+
+C es crear cuenta de cliente
+
+
+
